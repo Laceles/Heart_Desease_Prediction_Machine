@@ -1,0 +1,5 @@
+1.
+With the corrente data was possible to build a predictive machine to predict heart risk disease. 
+The best model was made with a random forest algorithm against four kinds of algorithm. 
+It's still needs to check some relevant points about recall and precision metrics, cause the most 
+suitable idea is the modeltends to make more false positive errors around the presence of heart risk.
