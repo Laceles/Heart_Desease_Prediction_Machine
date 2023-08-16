@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "predict-heart-risk"
+version = "0.1.0"
+description = "projet to predict heart risk"
+authors = ["Rodolfo Lima <rodolfo.eli.jrles@gmail.com>"]
+readme = "README.md"
+packages = [{include = "predict_heart_risk"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
