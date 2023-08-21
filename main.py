@@ -5,11 +5,11 @@ from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 from yellowbrick.classifier import ConfusionMatrix
-from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
-from yellowbrick.classifier import ConfusionMatrix
 from sklearn.preprocessing import LabelEncoder
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+from sklearn.preprocessing import MinMaxScaler
 
 
 modelo = joblib.load(
@@ -32,6 +32,31 @@ def index():
     return render_template("index.html")
 
 
+def parameter(df):
+    variaveis_categoricas = [
+        coluna for coluna in df.columns if df[coluna].dtype.name == "object"
+    ]
+    variaveis_numericas = [
+        coluna for coluna in df.columns if coluna not in variaveis_categoricas
+    ]
+    pipeline_categoricas = Pipeline(
+        [
+            ("imputer", SimpleImputer(strategy="constant", fill_value="missing")),
+            ("encoder", OneHotEncoder(handle_unknown="ignore", sparse=False)),
+        ]
+    )
+    pipeline_numerico = Pipeline(
+        [("imputer", SimpleImputer(strategy="median")), ("scales", MinMaxScaler())]
+    )
+    preprocessamento = ColumnTransformer(
+        [
+            ("cat", pipeline_categoricas, variaveis_categoricas),
+            ("num", pipeline_numerico, variaveis_numericas),
+        ]
+    )
+
+
+###########################################################################################################################
 unit = ColumnTransformer(
     [
         (
